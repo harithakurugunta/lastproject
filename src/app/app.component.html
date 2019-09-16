@@ -1,0 +1,117 @@
+<div class="container">
+    <div class="row" *ngIf="tokenno">
+      <div class="col-md-12 text-right">
+        Welcome - {{name}}
+        <a href="javascript:void(0)" (click)="logout()">Logout</a>
+      </div>
+      <div class="col-md-12 text-center">
+        <div class="btn-group">
+          <a routerLink="dashboard" class="btn btn-primary">Dashboard</a>
+          <a routerLink="item" class="btn btn-success">manage inventory</a>
+          <a routerLink="myuser" class="btn btn-warning">manage employee</a>
+          <a routerLink="useritem" class="btn btn-info">Distributed items</a>
+          <a routerLink="profile" class="btn btn-danger">my profile</a>
+
+        </div>
+
+      </div>
+
+      <div class="container pagecontent"> 
+          <router-outlet></router-outlet>
+         </div>
+  
+    </div>
+
+    <!--if Tokenno is false then below row will come else above row-->
+    <div class="row" *ngIf="!tokenno">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <!--for login-->
+        <div *ngIf="login" class="panel panel-primary">
+          
+          <div class="panel-heading">Customer login</div>
+          <div class="panel-body">
+            <p class="text-center text-danger">{{errormessage}}</p>
+      <form [formGroup]="loginform" (ngSubmit)="logincheck()">
+            <div class="form-group">
+              <label>Your Email Id</label>
+              <input type="email" class="form-control" formControlName="emailid">
+              <div *ngIf="pagesubmit && loginform.controls.emailid.errors">
+                <p *ngIf="loginform.controls.emailid.errors.required">
+                  <i class="text-danger"> Please Enter Your Email Id</i>
+                </p>
+                <p *ngIf="loginform.controls.emailid.errors.email">
+                    <i class="text-danger">  Please Enter Valid Email Id</i>
+                  </p>
+              </div>
+            </div><!--form group end here-->
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" formControlName="upass">
+                <div *ngIf="pagesubmit && loginform.controls.upass.errors">
+                    <p *ngIf="loginform.controls.upass.errors.required">
+                      <i class="text-danger"> Please Enter Password</i>
+                    </p>
+                    <p *ngIf="loginform.controls.upass.errors.minlength">
+                        <i class="text-danger"> Password min 5 characters</i>
+                      </p>
+                      <p *ngIf="loginform.controls.upass.errors.maxlength">
+                          <i class="text-danger"> Password max 8 characters</i>
+                        </p>
+                  </div>
+              </div>
+              <div class="form-group text-center">
+              <button class="btn btn-primary">login</button>
+              </div>
+     </form>
+          </div>
+          <div class="panel-footer text-center">
+              <a href="javascript:void(0)" (click)="enableblock('1')">I am new customer</a>
+          </div><!--Login Panel End here-->
+          
+        </div> <!--restrict reloading page-->
+        <div *ngIf="signup" class="panel panel-primary">
+            <div class="panel-heading text-center">Signup here</div>
+            <div class="panel-body">
+                <p class="text-center text-danger">{{errormessage}}</p>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="fname">
+                  </div>
+                  <div class="form-group">
+                      <label>Mobile</label>
+                      <input type="mobile" class="form-control" [(ngModel)]="mobile">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" [(ngModel)]="email">
+                      </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" [(ngModel)]="pass">
+                  </div>
+                  <div class="form-group">
+                      <label>City</label>
+                    <input type="text" class="form-control" [(ngModel)]="city" >
+                    </div>
+                    <div class="form-group">
+                        <label>Pincode</label>
+                        <input type="pincode" class="form-control" [(ngModel)]="pincode">
+                      </div>
+                      <div class="form-group text-center">
+                          <button class="btn btn-danger" (click)="register()">register</button>
+                          </div>
+            </div>
+            <div class="panel-footer text-center">
+          <a href="javascript:void(0)" (click)="enableblock('2')">I Have account !</a>
+          </div>
+        </div>
+       
+        <!--for signup-->
+      </div><!--4 end here-->
+      <div class="col-md-4"></div>
+    </div>
+  </div>
+
+
+ 
